@@ -21,6 +21,10 @@ class Transaction:
 
     def view_transaction(self, df):
         print(df)
+        while True:
+            quit = input("Press Q to quit: ").strip().lower()
+            if quit == 'q':
+                return
 
     def view_transactions_filter(self, df):
         # remain all data at first
@@ -76,6 +80,10 @@ class Transaction:
 
         filtered_transactions = df[filters]
         print(f"{filtered_transactions}\n")
+        while True:
+            quit = input("Press Q to quit: ").strip().lower()
+            if quit == 'q':
+                return
 
     def add_transaction(self):
         print("Add transactions")
