@@ -64,7 +64,7 @@ def main():
         elif operation == 9:
             an.show_top_spending_category(df)
         elif operation == 10:
-            df = ts.set_income()
+            df = ts.set_income(df)
         elif operation == 11:
             budget = bg.set_budget(budget)
         elif operation == 12:
