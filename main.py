@@ -35,7 +35,8 @@ def main():
         print("13. Check Budget Status")
         print("14. Visualize Spending Trends")
         print("15. Save Transactions to CSV")
-        print("16. Quit")
+        print("16. Save Budget to CSV")
+        print("17. Quit")
 
         try:
             operation = int(input("Choose an action below: "))
@@ -77,6 +78,8 @@ def main():
         elif operation == 15:
             ts.save_csv(df)
         elif operation == 16:
+            bg.save_budget_csv(budget)
+        elif operation == 17:
             ts.exit()
 
 if __name__ == "__main__":

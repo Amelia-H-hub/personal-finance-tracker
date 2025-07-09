@@ -1,8 +1,8 @@
 # This file will define functions about budget
 
 from datetime import datetime
-from tkinter import Tk
-from tkinter.filedialog import askopenfilename
+from tkinter import Tk, messagebox
+from tkinter.filedialog import askopenfilename, asksaveasfilename
 import pandas as pd
 
 class Budget:
@@ -10,15 +10,15 @@ class Budget:
         Tk().withdraw()
 
         # choose a file
-        budget_path = askopenfilename(filetypes=[("CSV files", "*.csv")])
+        self.budget_path = askopenfilename(filetypes=[("CSV files", "*.csv")])
 
         # read the csv file
-        budget = pd.read_csv(budget_path)
+        budget = pd.read_csv(self.budget_path)
         try:
             budget["Month"] = pd.to_datetime(budget["Month"], format="%Y-%m").dt.to_period("M")
         except ValueError:
             print("Invalid month format. Please check your data in the file")
-        print("Load budget successfully!", budget_path)
+        print("Load budget successfully!", self.budget_path)
         return budget
 
     def set_budget(self, budget, df):
@@ -135,3 +135,25 @@ class Budget:
             quit = input("Press Q to quit: ").strip().lower()
             if quit == 'q':
                 return
+
+    def save_budget_csv(self, budget):
+        root = Tk()
+        root.withdraw()
+
+        if not self.budget_path:
+            self.budget_path = asksaveasfilename(defaultextension=".csv",
+                                               filetypes=[("CSV files", "*.csv")],
+                                               title="Save as")
+            if not self.budget_path:
+                print("Canceled", "Budget didn't save.")
+                return
+
+        else:
+            confirm = messagebox.askyesno("Confirm Overwrite",
+                                          f"Do you want to overwrite budget in {self.budget_path}?")
+            if not confirm:
+                messagebox.showinfo("Canceled", "Budget didn't save.")
+                return
+
+        budget.to_csv(self.budget_path, index=False)
+        print(f"Budget saved to {self.budget_path}")
