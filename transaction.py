@@ -103,7 +103,7 @@ class Transaction:
             "Category": category,
             "Description": description,
             "Amount": amount,
-            "type" : "Expense",
+            "Type" : "Expense",
         }
 
 
