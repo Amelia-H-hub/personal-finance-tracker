@@ -170,14 +170,19 @@ class Transaction:
                 return
 
         else:
-            confirm = messagebox.askyesno("Confirm Overwrite",
-                                          f"Do you want to overwrite transactions in {self.file_path}?")
-            if not confirm:
-                messagebox.showinfo("Canceled", "Transactions didn't save.")
+            confirm = input(
+                f"Do you want to overwrite transactions in {self.file_path}? (Y/n): ").strip().lower()
+            if confirm not in ["y", "n", ""]:
+                print("Invalid input. Please enter either 'y' or 'n' or just press enter for 'y'.")
+            elif confirm == 'n':
+                print("Transactions didn't save.")
                 return
 
-        df.to_csv(self.file_path, index=False)
-        print(f"File saved to {self.file_path}")
+        try:
+            df.to_csv(self.file_path, index=False)
+            print(f"File saved to {self.file_path}")
+        except Exception as e:
+            print(f"Error. Failed to save: {e}")
 
     def exit(self):
         print("Exit")
