@@ -12,11 +12,14 @@ class Transaction:
 
         # choose a file
         self.file_path = askopenfilename(filetypes=[("CSV files", "*.csv")])
-        print("Load file successfully:", self.file_path)
+        if not self.file_path:
+            print("Canceled.", "No data imported.")
+            return
 
         # read the csv file
         df = pd.read_csv(self.file_path)
         df["Date"] = pd.to_datetime(df["Date"])
+        print("Load transaction data successfully:", self.file_path)
         return df
 
     def view_transaction(self, df):
