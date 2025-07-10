@@ -122,15 +122,20 @@ class Budget:
             print(merged_df.to_string(index=False))
             break
 
-        print("\n=====Heads up!=====")
         over_budget = merged_df[(merged_df["Budget"].notna()) & (merged_df["Expense"] > merged_df["Budget"])]
+        near_budget = merged_df[(merged_df["Budget"].notna()) & ((merged_df["Budget"] - merged_df["Expense"]) > 0) & ((merged_df["Budget"] - merged_df["Expense"]) < 50)]
+
+        if not over_budget.empty or not near_budget.empty:
+            print("\n=====Heads up!=====")
+        else:
+            print("✅ You stayed within your budget for all categories!")
+
         if not over_budget.empty:
             print("⚠️ You have exceeded your budget in the following categories:")
             for _, rowOver in over_budget.iterrows():
                 print(f"{rowOver['Category']}: ${rowOver['Expense']:.2f} / ${rowOver['Budget']:.2f}; Over Budget Amount: ${rowOver['Expense'] - rowOver['Budget']:.2f}")
             print()
 
-        near_budget = merged_df[(merged_df["Budget"].notna()) & ((merged_df["Budget"] - merged_df["Expense"]) > 0) & ((merged_df["Budget"] - merged_df["Expense"]) < 50)]
         if not near_budget.empty:
             print("⚠️ You are close to exceeding your budget in the following categories:")
             for _, rowClose in near_budget.iterrows():
