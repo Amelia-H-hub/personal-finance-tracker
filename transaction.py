@@ -132,7 +132,7 @@ class Transaction:
                 print("An unexpected error occurred.")
                 continue
 
-            if index < 0 or index >= len(df):
+            if index < 1 or index >= len(df):
                 print("Invalid index. Please enter again.")
                 continue
 
