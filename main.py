@@ -16,22 +16,23 @@ def main():
     df = pd.DataFrame(columns=columns)
     columns_budget = ["Month", "Category", "Budget"]
     budget = pd.DataFrame(columns=columns_budget)
+    is_budget_saved = False
 
-    print("===Hi! I'm your personal finance tracker===")
+    print("\n===Hi! I'm your personal finance tracker===")
 
     while True:
-        print("Choose an action below:")
+        print("\nChoose an action below:")
         print("1. Import a CSV file of transactions")
         print("2. Import a CSV file of budget")
         print("3. View all transactions")
         print("4. View transactions by date range, category")
-        print("5. Add a transaction")
-        print("6. Edit an existing transaction")
-        print("7. Delete a transaction")
-        print("8. Analyze Spending by Category")
-        print("9. Calculate Average Monthly Spending")
-        print("10. Show Top Spending Category")
-        print("11. Set Monthly Income")
+        print("5. Add an expense")
+        print("6. Add an Income")
+        print("7. Edit an existing transaction")
+        print("8. Delete a transaction")
+        print("9. Analyze Spending by Category")
+        print("10. Calculate Average Monthly Spending")
+        print("11. Show Top Spending Category")
         print("12. Set Category Budget")
         print("13. Check Budget Status")
         print("14. Visualize Spending Trends")
@@ -40,7 +41,7 @@ def main():
         print("17. Quit")
 
         try:
-            operation = int(input("Choose an action below: "))
+            operation = int(input("\nEnter the number of the action: "))
         except ValueError:
             print("Invalid input. Please enter a number between 1 and 15.")
             continue
@@ -51,7 +52,7 @@ def main():
         if operation == 1:
             df = ts.import_csv()
         elif operation == 2:
-            budget = bg.import_budget()
+            budget, is_budget_saved = bg.import_budget()
         elif operation == 3:
             ts.view_transaction(df)
         elif operation == 4:
@@ -59,19 +60,19 @@ def main():
         elif operation == 5:
             df = ts.add_transaction(df)
         elif operation == 6:
-            df = ts.edit_transaction(df)
-        elif operation == 7:
-            df = ts.delete_transaction(df)
-        elif operation == 8:
-            an.analyze_spending_category(df)
-        elif operation == 9:
-            an.calculate_average_monthly_spending(df)
-        elif operation == 10:
-            an.show_top_spending_category(df)
-        elif operation == 11:
             df = ts.set_income(df)
+        elif operation == 7:
+            df = ts.edit_transaction(df)
+        elif operation == 8:
+            df = ts.delete_transaction(df)
+        elif operation == 9:
+            an.analyze_spending_category(df)
+        elif operation == 10:
+            an.calculate_average_monthly_spending(df)
+        elif operation == 11:
+            an.show_top_spending_category(df)
         elif operation == 12:
-            budget = bg.set_budget(budget, df)
+            budget, is_budget_saved = bg.set_budget(budget, df)
         elif operation == 13:
             bg.check_budget(budget, df)
         elif operation == 14:
@@ -79,9 +80,9 @@ def main():
         elif operation == 15:
             ts.save_csv(df)
         elif operation == 16:
-            bg.save_budget_csv(budget)
+            is_budget_saved = bg.save_budget_csv(budget)
         elif operation == 17:
-            ts.exit()
+            ts.exit(is_budget_saved)
 
 if __name__ == "__main__":
     main()
