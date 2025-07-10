@@ -97,9 +97,62 @@ class Transaction:
         print("Delete transactions")
         return []
 
-    def set_income(self):
+    def set_income(self, df):
         print("Set income")
-        return []
+
+        #  Get the date
+        while True:
+            try:
+                date = pd.to_datetime(input("Enter the date (YYYY-MM-DD): "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a valid date.")
+                continue
+            except Exception:
+                print("An unexpected error occurred.")
+                continue
+
+        #  Get a discription
+        while True:
+            try:
+                desc = input("Enter a description: ")
+                break
+            except Exception:
+                print("An unexpected error occurred.")
+                continue
+        
+        #  Get the amount
+        while True:
+            try:
+                amount = round(pd.to_numeric(input("Enter the amount: ")), 2)
+
+                if amount > 0:
+                    break
+                else:
+                    print("Invalid input. Please enter a value greater than 0.01.")
+                    continue
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+                continue
+            except Exception:
+                print("An unexpected error occurred.")
+                continue
+        
+        # Create a new row
+        new_row = {
+            "Date" : date,
+            "Category" : "Income",
+            "Description" : desc,
+            "Amount" : amount,
+            "Type" : "Income"
+        }
+        new_row_df = pd.DataFrame(new_row, index=[0])
+
+        # Combine dataframe and a new row
+        results_df = pd.concat([df, new_row_df], ignore_index=True)
+
+        print("Income added successfully!")
+        return results_df
 
     def save_csv(self, df):
         root = Tk()
