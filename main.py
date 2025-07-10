@@ -14,28 +14,30 @@ def main():
 
     columns = ["Date", "Category", "Description", "Amount", "Type"]
     df = pd.DataFrame(columns=columns)
-    columns_budget = ["Date", "Category", "Amount"]
+    columns_budget = ["Month", "Category", "Budget"]
     budget = pd.DataFrame(columns=columns_budget)
 
     print("===Hi! I'm your personal finance tracker===")
 
     while True:
         print("Choose an action below:")
-        print("1. Import a CSV File")
-        print("2. View all transactions")
-        print("3. View transactions by date range, category, type")
-        print("4. Add a transaction")
-        print("5. Edit an existing transaction")
-        print("6. Delete a transaction")
-        print("7. Analyze Spending by Category")
-        print("8. Calculate Average Monthly Spending")
-        print("9. Show Top Spending Category")
-        print("10. Set Monthly Income")
-        print("11. Set Category Budget")
-        print("12. Check Budget Status")
-        print("13. Visualize Spending Trends")
-        print("14. Save Transactions to CSV")
-        print("15. Quit")
+        print("1. Import a CSV file of transactions")
+        print("2. Import a CSV file of budget")
+        print("3. View all transactions")
+        print("4. View transactions by date range, category, type")
+        print("5. Add a transaction")
+        print("6. Edit an existing transaction")
+        print("7. Delete a transaction")
+        print("8. Analyze Spending by Category")
+        print("9. Calculate Average Monthly Spending")
+        print("10. Show Top Spending Category")
+        print("11. Set Monthly Income")
+        print("12. Set Category Budget")
+        print("13. Check Budget Status")
+        print("14. Visualize Spending Trends")
+        print("15. Save Transactions to CSV")
+        print("16. Save Budget to CSV")
+        print("17. Quit")
 
         try:
             operation = int(input("Choose an action below: "))
@@ -49,32 +51,36 @@ def main():
         if operation == 1:
             df = ts.import_csv()
         elif operation == 2:
-            ts.view_transaction(df)
+            budget = bg.import_budget()
         elif operation == 3:
-            ts.view_transactions_filter(df)
+            ts.view_transaction(df)
         elif operation == 4:
-            df = ts.add_transaction(df)
+            ts.view_transactions_filter(df)
         elif operation == 5:
-            df = ts.edit_transaction(df)
+            df = ts.add_transaction(df)
         elif operation == 6:
-            df = ts.delete_transaction(df)
+            df = ts.edit_transaction(df)
         elif operation == 7:
-            an.analyze_spending_category(df)
+            df = ts.delete_transaction(df)
         elif operation == 8:
-            an.calculate_average_monthly_spending(df)
+            an.analyze_spending_category(df)
         elif operation == 9:
-            an.show_top_spending_category(df)
+            an.calculate_average_monthly_spending(df)
         elif operation == 10:
-            df = ts.set_income()
+            an.show_top_spending_category(df)
         elif operation == 11:
-            budget = bg.set_budget(budget)
+            df = ts.set_income(df)
         elif operation == 12:
-            bg.check_budget(budget)
+            budget = bg.set_budget(budget, df)
         elif operation == 13:
-            an.visualize_spending_trends(df)
+            bg.check_budget(budget, df)
         elif operation == 14:
-            ts.save_csv(df)
+            an.visualize_spending_trends(df)
         elif operation == 15:
+            ts.save_csv(df)
+        elif operation == 16:
+            bg.save_budget_csv(budget)
+        elif operation == 17:
             ts.exit()
 
 if __name__ == "__main__":
