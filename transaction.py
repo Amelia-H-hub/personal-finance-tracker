@@ -1,7 +1,7 @@
 # This file will define functions for operating transactions
 
 from datetime import datetime
-from tkinter import Tk, messagebox
+from tkinter import Tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import pandas as pd
 
@@ -16,7 +16,7 @@ class Transaction:
         # choose a file
         self.file_path = askopenfilename(filetypes=[("CSV files", "*.csv")])
         if not self.file_path:
-            print("Canceled.", "No data imported.")
+            print("Cancelled.", "No data imported.")
             return
 
         # read the csv file
@@ -78,7 +78,7 @@ class Transaction:
 
         while True:
             type = input(
-                "Enter a type either 'Expense' or 'Income'. If nothing is entered, the result will include all types: ")
+                "Enter a type, either 'Expense' or 'Income'. If nothing is entered, the result will include all types: ")
             if type != "" and type not in ["Expense", "Income"]:
                 print("Invalid type. Please enter either 'Expense' or 'Income'.")
                 continue
@@ -196,7 +196,7 @@ class Transaction:
                                           filetypes=[("CSV files", "*.csv")],
                                           title="Save as")
             if not self.file_path:
-                print("Canceled", "Transaction didn't save.")
+                print("Cancelled", "Transaction didn't save.")
                 return
 
         else:
