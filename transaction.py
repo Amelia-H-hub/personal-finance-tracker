@@ -225,6 +225,7 @@ class Transaction:
 
         print()
         print("Transaction updated successfully!")
+        self.is_trans_saved = False
         return df
 
 
@@ -301,6 +302,7 @@ class Transaction:
         # Combine dataframe and a new row
         results_df = pd.concat([df, new_row_df], ignore_index=True)
         self.is_trans_saved = False
+        results_df.index = range(1,len(results_df)+1)
 
         print("Income added successfully!")
         return results_df
