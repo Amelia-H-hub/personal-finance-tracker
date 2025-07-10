@@ -88,17 +88,42 @@ class Transaction:
             if quit == 'q':
                 return
 
-    def add_transaction(self):
+    def add_transaction(self, df):
         print("Add transactions")
-        return []
+        date = input("Enter the date: yyyy-mm-dd ")
+        category = input("Enter the category:  ")
+        description = input("Enter the descripcion: ")
+        type = input("Enter the type: ")
+
+        while True:
+            try:
+                amount = float(input("Enter the amount: "))
+                break
+            except ValueError:
+                print("Please enter a number.")
+
+        new_transaction = {
+            "Date": pd.to_datetime(date),
+            "Category": category,
+            "Description": description,
+            "Amount": amount,
+            "Type": "Expense"
+        }
+
+        new_row_df = pd.DataFrame([new_transaction])
+        df = pd.concat([df, new_row_df], ignore_index=True)
+
+        print("Transaction added successfully")
+        return df
 
     def edit_transaction(self, df):
         print("Edit transactions")
+
         return []
 
     def delete_transaction(self, df):
         print("Delete transactions")
-        return []
+        return
 
     def set_income(self, df):
         print("Set income")
