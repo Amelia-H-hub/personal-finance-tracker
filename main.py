@@ -6,6 +6,7 @@ from transaction import Transaction
 from budget import Budget
 from analysis import Analysis
 
+
 def main():
     ts = Transaction()
     bg = Budget()
@@ -52,7 +53,7 @@ def main():
         elif operation == 3:
             ts.view_transactions_filter(df)
         elif operation == 4:
-            df = ts.add_transaction()
+            df = ts.add_transaction(df)
         elif operation == 5:
             df = ts.edit_transaction(df)
         elif operation == 6:
