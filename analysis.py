@@ -7,7 +7,7 @@ class Analysis:
         if df.empty:
             return df
         
-        print("Analyze Spending Category")
+        print()
         print("--- Total Spending by Category ---")
 
         total_spending_by_category = df[df["Type"] == "Expense"].groupby("Category")["Amount"].sum().sort_index()
@@ -17,14 +17,14 @@ class Analysis:
         if df.empty:
             return df
         
-        print("Calculate Average Monthly Spending")
+        print()
         print("--- Average Monthly Spending ---")
 
         avg = round(df[df["Type"] == "Expense"].groupby(df["Date"].dt.to_period('M'))["Amount"].mean().mean(), 2)
         print(avg)
 
     def show_top_spending_category(self, df):
-        print("Show Top Spending Category")
+        print()
         if df.empty:
             print("No data to analyze.")
             return
