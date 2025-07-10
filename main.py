@@ -24,7 +24,7 @@ def main():
         print("1. Import a CSV file of transactions")
         print("2. Import a CSV file of budget")
         print("3. View all transactions")
-        print("4. View transactions by date range, category, type")
+        print("4. View transactions by date range, category")
         print("5. Add a transaction")
         print("6. Edit an existing transaction")
         print("7. Delete a transaction")

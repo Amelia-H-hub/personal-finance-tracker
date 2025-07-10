@@ -22,11 +22,11 @@ class Transaction:
         # read the csv file
         df = pd.read_csv(self.file_path)
         df["Date"] = pd.to_datetime(df["Date"])
+        df.index = range(1, len(df) + 1)
         print("Load transaction data successfully:", self.file_path)
         return df
 
     def view_transaction(self, df):
-        df.index = range(1, len(df) + 1)
         print(df)
         while True:
             quit = input("Press Q to quit: ").strip().lower()
@@ -34,7 +34,6 @@ class Transaction:
                 return
 
     def view_transactions_filter(self, df):
-        df.index = range(1, len(df) + 1)
         # remain all data at first
         filters = pd.Series([True] * len(df), index=df.index)
 
@@ -76,18 +75,8 @@ class Transaction:
                 filters &= df["Category"] == category
             break
 
-        while True:
-            type = input(
-                "Enter a type, either 'Expense' or 'Income'. If nothing is entered, the result will include all types: ")
-            if type != "" and type not in ["Expense", "Income"]:
-                print("Invalid type. Please enter either 'Expense' or 'Income'.")
-                continue
-            elif type:
-                filters &= df["Type"] == type
-            break
-
         filtered_transactions = df[filters]
-        print(f"{filtered_transactions}\n")
+        print(f"\n{filtered_transactions}\n")
         while True:
             quit = input("Press Q to quit: ").strip().lower()
             if quit == 'q':
