@@ -226,4 +226,5 @@ class Transaction:
             print(f"Error. Failed to save: {e}")
 
     def exit(self):
-        print("Exit")
+        print("Goodbye! Your session has ended.")
+        exit()
