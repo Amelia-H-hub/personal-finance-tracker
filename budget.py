@@ -85,7 +85,7 @@ class Budget:
             budget.loc[len(budget)] = new_budget
 
         self.is_budget_saved = False
-        print(budget, index=False)
+        print(budget.to_string(index=False))
         return budget, self.is_budget_saved
 
     def check_budget(self, budget, df):
@@ -97,6 +97,9 @@ class Budget:
             return
         while True:
             month = input("Enter the year and month to check your budget (YYYY-MM) or press Q to quit: ").strip()
+            if month == "":
+                print("Please enter a valid month or press Q to quit.")
+                continue
             if month.lower() == "q":
                 return
             try:
@@ -146,6 +149,7 @@ class Budget:
         while True:
             quit = input("Press Q to quit: ").strip().lower()
             if quit == 'q':
+                df.drop(columns=["Month"], inplace=True)
                 return
 
     def save_budget_csv(self, budget):
