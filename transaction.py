@@ -123,7 +123,21 @@ class Transaction:
 
     def delete_transaction(self, df):
         print("Delete transactions")
-        return
+        try:
+
+            delete_index = int(input("Enter the index of the transaction to delete: "))
+
+            if delete_index not in df.index:
+                print(f"Error: Index {delete_index} not found.")
+                return df
+
+            df = df.drop(delete_index)
+            print("Transaction deleted successfully!")
+
+        except ValueError:
+            print("Invalid input. Please enter a valid integer index.")
+
+        return df
 
     def set_income(self, df):
         print("Set income")
