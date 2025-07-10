@@ -1,6 +1,5 @@
-# This file will define functions about budget
+# This file will define functions about the budget
 
-from datetime import datetime
 from tkinter import Tk, messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import pandas as pd
@@ -15,7 +14,7 @@ class Budget:
         # choose a file
         self.budget_path = askopenfilename(filetypes=[("CSV files", "*.csv")])
         if not self.budget_path:
-            print("Canceled.", "No data imported.")
+            print("Cancelled.", "No data imported.")
             return
 
         # read the csv file
@@ -156,12 +155,12 @@ class Budget:
                                                filetypes=[("CSV files", "*.csv")],
                                                title="Save as")
             if not self.budget_path:
-                print("Canceled", "Budget didn't save.")
+                print("Cancelled", "Budget didn't save.")
                 return
 
         else:
             confirm = input(
-                f"Do you want to overwrite budget in {self.budget_path}? (Y/n): ").strip().lower()
+                f"Do you want to overwrite the budget in {self.budget_path}? (Y/n): ").strip().lower()
             if confirm not in ["y", "n", ""]:
                 print("Invalid input. Please enter either 'y' or 'n' or just press enter for 'y'.")
             elif confirm == 'n':
