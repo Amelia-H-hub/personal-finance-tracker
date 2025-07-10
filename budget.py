@@ -1,5 +1,5 @@
 # This file will define functions about the budget
-
+from operator import index
 from tkinter import Tk, messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import pandas as pd
@@ -7,6 +7,7 @@ import pandas as pd
 class Budget:
     def __init__(self):
         self.budget_path = None
+        self.is_budget_saved = False
 
     def import_budget(self):
         Tk().withdraw()
@@ -24,7 +25,8 @@ class Budget:
         except ValueError:
             print("Invalid month format. Please check your data in the file")
         print("Load budget successfully!", self.budget_path)
-        return budget
+        self.is_budget_saved = False
+        return budget, self.is_budget_saved
 
     def set_budget(self, budget, df):
         categories = df["Category"].unique().tolist()
@@ -82,9 +84,9 @@ class Budget:
             }
             budget.loc[len(budget)] = new_budget
 
-        print("Set Budget")
-        print(budget)
-        return budget
+        self.is_budget_saved = False
+        print(budget, index=False)
+        return budget, self.is_budget_saved
 
     def check_budget(self, budget, df):
         if budget.empty:
@@ -168,4 +170,7 @@ class Budget:
                 return
 
         budget.to_csv(self.budget_path, index=False)
+        self.is_budget_saved = True
         print(f"Budget saved to {self.budget_path}")
+
+        return self.is_budget_saved

@@ -8,6 +8,7 @@ import pandas as pd
 class Transaction:
     def __init__(self):
         self.file_path = None
+        self.is_trans_saved = False
 
     def import_csv(self):
         # hide the main window
@@ -23,7 +24,8 @@ class Transaction:
         df = pd.read_csv(self.file_path)
         df["Date"] = pd.to_datetime(df["Date"])
         df.index = range(1, len(df) + 1)
-        print("Load transaction data successfully:", self.file_path)
+        self.is_trans_saved = False
+        print("\nLoad transaction data successfully!")
         return df
 
     def view_transaction(self, df):
@@ -114,6 +116,7 @@ class Transaction:
              df = pd.concat([df, new_row_df], ignore_index=True)
 
         df.index = range(1,len(df)+1)
+        self.is_trans_saved = False
         print("Transaction added successfully")
         return df
 
@@ -133,7 +136,7 @@ class Transaction:
                 print("An unexpected error occurred.")
                 continue
 
-            if index < 1 or index >= len(df):
+            if index < 1 or index >= len(df) + 1:
                 print("Invalid index. Please enter again.")
                 continue
 
@@ -238,6 +241,7 @@ class Transaction:
             except ValueError:
                 print("Invalid input. Please enter a valid integer index.")
 
+        self.is_trans_saved = False
         return df
 
     def set_income(self, df):
@@ -293,6 +297,7 @@ class Transaction:
 
         # Combine dataframe and a new row
         results_df = pd.concat([df, new_row_df], ignore_index=True)
+        self.is_trans_saved = False
 
         print("Income added successfully!")
         return results_df
@@ -320,10 +325,27 @@ class Transaction:
 
         try:
             df.to_csv(self.file_path, index=False)
+            self.is_trans_saved = True
             print(f"File saved to {self.file_path}")
         except Exception as e:
             print(f"Error. Failed to save: {e}")
 
-    def exit(self):
+    def exit(self, is_budget_saved):
+        if not self.is_trans_saved:
+            is_quit = input("Transactions haven't been saved. Are you sure to quit? (Y/n) ").strip().lower()
+            if is_quit in ["y", "n", ""]:
+                if is_quit == "n":
+                    return
+            else:
+                print("Invalid input. Please enter either 'y' or 'n' or just press enter for 'y'.")
+
+        if not is_budget_saved:
+            is_quit_without_budget = input(
+                "Budget haven't been saved. Are you sure to quit? (Y/n) ").strip().lower()
+            if is_quit_without_budget in ["y", "n", ""]:
+                if is_quit_without_budget == "n":
+                    return
+            else:
+                print("Invalid input. Please enter either 'y' or 'n' or just press enter for 'y'.")
         print("Goodbye! Your session has ended.")
         exit()
