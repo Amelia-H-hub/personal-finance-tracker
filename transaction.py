@@ -119,8 +119,107 @@ class Transaction:
 
     def edit_transaction(self, df):
         print("Edit transactions")
+        if df.empty:
+            return df
+        
+        # Get the index of the transaction
+        while True:
+            try:
+                index = int(input("Enter the index of the transaction to edit: "))
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+                continue
+            except Exception:
+                print("An unexpected error occurred.")
+                continue
 
-        return []
+            if index < 1 or index >= len(df):
+                print("Invalid index. Please enter again.")
+                continue
+
+            print()
+            break
+
+        # Display current transaction details
+        print("Current Transaction Details:")
+        print(f"Date: {df.loc[df.index[index], "Date"].date()}")
+        print(f"Category: {df.loc[df.index[index], "Category"]}")
+        print(f"Description: {df.loc[df.index[index], "Description"]}")
+        print(f"Amount: {df.loc[df.index[index], "Amount"]}")
+        print()
+
+        # Get the date
+        while True:
+            try:
+                s = input("Enter new date (YYYY-MM-DD) or press Enter to keep current: ")
+                if not s:
+                    date = df.loc[df.index[index], "Date"]
+                else:
+                    date = pd.to_datetime(s)
+                break
+            except ValueError:
+                print("Invalid input. Please enter a valid date.")
+                continue
+            except Exception:
+                print("An unexpected error occurred.")
+                continue
+
+        # Get the category
+        while True:
+            try:
+                category = input("Enter new category or press Enter to keep current: ")
+                if not category:
+                    category = df.loc[df.index[index], "Category"]
+                break
+            except Exception:
+                print("An unexpected error occurred.")
+                continue
+        
+        # Get a description
+        while True:
+            try:
+                desc = input("Enter new description or press Enter to keep current: ")
+                if not desc:
+                    desc = df.loc[df.index[index], "Description"]
+                break
+            except Exception:
+                print("An unexpected error occurred.")
+                continue
+        
+        # Get the amount
+        while True:
+            try:
+                s = input("Enter new amount or press Enter to keep current: ")
+                if not s:
+                    amount = df.loc[df.index[index], "Amount"]
+                else:
+                    amount = round(pd.to_numeric(s), 2)       
+                    if amount <= 0:
+                        print("Invalid input. Please enter a value greater than 0.01.")
+                        continue
+                break
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+                continue
+            except Exception:
+                print("An unexpected error occurred.")
+                continue
+
+        # Create a new row
+        new_row = {
+            "Date" : date,
+            "Category" : category,
+            "Description" : desc,
+            "Amount" : amount,
+            "Type" : df.loc[df.index[index], "Type"]
+        }
+
+        # Update table with new row
+        df.iloc[index] = new_row
+
+        print()
+        print("Transaction updated successfully!")
+        return df
 
 
     def delete_transaction(self, df):
