@@ -103,7 +103,7 @@ class Transaction:
             "Category": category,
             "Description": description,
             "Amount": amount,
-
+            "type" : "Expense",
         }
 
 
@@ -136,13 +136,16 @@ class Transaction:
                 print("An unexpected error occurred.")
                 continue
 
-            if index < 1 or index >= len(df) + 1:
+            if index < 1 or index > len(df):
                 print("Invalid index. Please enter again.")
                 continue
 
             print()
             break
 
+        # Subtract 1 because the DataFrame index starts at 1
+        index -= 1
+        
         # Display current transaction details
         print("Current Transaction Details:")
         print(f"Date: {df.loc[df.index[index], "Date"].date()}")
