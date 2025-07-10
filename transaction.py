@@ -92,8 +92,8 @@ class Transaction:
         print("Add transactions")
         date = input("Enter the date: yyyy-mm-dd ")
         category = input("Enter the category:  ")
-        description = input("Enter the descripcion: ")
-        type = input("Enter the type: ")
+        description = input("Enter the description: ")
+
 
         while True:
             try:
@@ -107,12 +107,19 @@ class Transaction:
             "Category": category,
             "Description": description,
             "Amount": amount,
-            "Type": "Expense"
+
         }
 
-        new_row_df = pd.DataFrame([new_transaction])
-        df = pd.concat([df, new_row_df], ignore_index=True)
 
+
+        new_row_df = pd.DataFrame([new_transaction])
+
+        if df.empty:
+            df = new_row_df
+        else:
+             df = pd.concat([df, new_row_df], ignore_index=True)
+
+        df.index = range(1,len(df)+1)
         print("Transaction added successfully")
         return df
 
@@ -121,21 +128,22 @@ class Transaction:
 
         return []
 
+
     def delete_transaction(self, df):
         print("Delete transactions")
-        try:
+        while True:
+            try:
+                delete_index = int(input("Enter the index of the transaction to delete: "))
 
-            delete_index = int(input("Enter the index of the transaction to delete: "))
+                if delete_index in df.index:
+                    df = df.drop(delete_index)
+                    print("Transaction deleted successfully!")
+                    break
+                else:
+                    print(f"Error: Index {delete_index} not found. Please try again.")
 
-            if delete_index not in df.index:
-                print(f"Error: Index {delete_index} not found.")
-                return df
-
-            df = df.drop(delete_index)
-            print("Transaction deleted successfully!")
-
-        except ValueError:
-            print("Invalid input. Please enter a valid integer index.")
+            except ValueError:
+                print("Invalid input. Please enter a valid integer index.")
 
         return df
 
