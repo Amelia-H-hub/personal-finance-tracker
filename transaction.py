@@ -6,6 +6,9 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename
 import pandas as pd
 
 class Transaction:
+    def __init__(self):
+        self.file_path = None
+
     def import_csv(self):
         # hide the main window
         Tk().withdraw()
@@ -23,6 +26,7 @@ class Transaction:
         return df
 
     def view_transaction(self, df):
+        df.index = range(1, len(df) + 1)
         print(df)
         while True:
             quit = input("Press Q to quit: ").strip().lower()
@@ -30,8 +34,9 @@ class Transaction:
                 return
 
     def view_transactions_filter(self, df):
+        df.index = range(1, len(df) + 1)
         # remain all data at first
-        filters = pd.Series([True] * len(df))
+        filters = pd.Series([True] * len(df), index=df.index)
 
         while True:
             start_date = input("Enter start date (YYYY-MM-DD): ").strip()
