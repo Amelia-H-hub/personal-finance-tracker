@@ -11,13 +11,16 @@ class Transaction:
         self.is_trans_saved = False
 
     def import_csv(self):
-        # hide the main window
-        Tk().withdraw()
+        root = Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+        root.update()
 
         # choose a file
         self.file_path = askopenfilename(filetypes=[("CSV files", "*.csv")])
         if not self.file_path:
             print("Cancelled.", "No data imported.")
+            root.destroy()
             return
 
         # read the csv file
@@ -25,6 +28,7 @@ class Transaction:
         df["Date"] = pd.to_datetime(df["Date"])
         df.index = range(1, len(df) + 1)
         self.is_trans_saved = False
+        root.destroy()
         print("\nLoad transaction data successfully!")
         return df
 
@@ -308,15 +312,19 @@ class Transaction:
         return results_df
 
     def save_csv(self, df):
-        root = Tk()
-        root.withdraw()
-
+        is_new_file = False
         if not self.file_path:
+            is_new_file = True
+            root = Tk()
+            root.attributes("-topmost", True)
+            root.update()
+            root.withdraw()
             self.file_path = asksaveasfilename(defaultextension=".csv",
                                           filetypes=[("CSV files", "*.csv")],
                                           title="Save as")
             if not self.file_path:
                 print("Cancelled", "Transaction didn't save.")
+                root.destroy()
                 return
 
         else:
@@ -334,6 +342,9 @@ class Transaction:
             print(f"File saved to {self.file_path}")
         except Exception as e:
             print(f"Error. Failed to save: {e}")
+
+        if is_new_file:
+            root.destroy()
 
     def exit(self, is_budget_saved):
         if not self.is_trans_saved:
