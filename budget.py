@@ -7,7 +7,7 @@ import pandas as pd
 class Budget:
     def __init__(self):
         self.budget_path = None
-        self.is_budget_saved = False
+        self.is_budget_saved = True
 
     def import_budget(self):
         root = Tk()
