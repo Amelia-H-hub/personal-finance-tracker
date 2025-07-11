@@ -14,7 +14,7 @@ def main():
     df = pd.DataFrame(columns=columns)
     columns_budget = ["Month", "Category", "Budget"]
     budget = pd.DataFrame(columns=columns_budget)
-    is_budget_saved = False
+    is_budget_saved = True
 
     print("\n===Hi! I'm your personal finance tracker===")
 
