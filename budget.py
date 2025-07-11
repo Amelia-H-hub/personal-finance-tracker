@@ -10,12 +10,16 @@ class Budget:
         self.is_budget_saved = False
 
     def import_budget(self):
-        Tk().withdraw()
+        root = Tk()
+        root.attributes("-topmost", True)
+        root.update()
+        root.withdraw()
 
         # choose a file
         self.budget_path = askopenfilename(filetypes=[("CSV files", "*.csv")])
         if not self.budget_path:
             print("Cancelled.", "No data imported.")
+            root.destroy()
             return
 
         # read the csv file
@@ -26,6 +30,7 @@ class Budget:
             print("Invalid month format. Please check your data in the file")
         print("Load budget successfully!", self.budget_path)
         self.is_budget_saved = False
+        root.destroy()
         return budget, self.is_budget_saved
 
     def set_budget(self, budget, df):
@@ -65,13 +70,14 @@ class Budget:
                 continue
             break
 
-        existing = budget[(budget["Month"] == month) & (budget["Category"] == category)]
+        mask = (budget["Month"] == month) & (budget["Category"] == category)
+        existing = budget[mask]
 
         if not existing.empty:
             print("A budget for this month and category already exists.")
             isOverwrite = input("Do you want to update this budget? (Y/n) ").strip().lower()
             if isOverwrite == "y" or isOverwrite == "":
-                budget[(budget["Month"] == month) & (budget["Category"] == category), "Budget"] = budgetAmount
+                budget.loc[mask, "Budget"] = budgetAmount
                 print(f"Budget for {month} of {category} has been updated.")
             else:
                 print("No changes made.")
@@ -85,6 +91,7 @@ class Budget:
             budget.loc[len(budget)] = new_budget
 
         self.is_budget_saved = False
+        print("\n=== Budget List ===")
         print(budget.to_string(index=False))
         return budget, self.is_budget_saved
 
@@ -153,15 +160,19 @@ class Budget:
                 return
 
     def save_budget_csv(self, budget):
-        root = Tk()
-        root.withdraw()
-
+        is_new_file = False
         if not self.budget_path:
+            is_new_file = True
+            root = Tk()
+            root.attributes("-topmost", True)
+            root.update()
+            root.withdraw()
             self.budget_path = asksaveasfilename(defaultextension=".csv",
                                                filetypes=[("CSV files", "*.csv")],
                                                title="Save as")
             if not self.budget_path:
                 print("Cancelled", "Budget didn't save.")
+                root.destroy()
                 return
 
         else:
@@ -176,5 +187,6 @@ class Budget:
         budget.to_csv(self.budget_path, index=False)
         self.is_budget_saved = True
         print(f"Budget saved to {self.budget_path}")
-
+        if is_new_file:
+            root.destroy()
         return self.is_budget_saved
