@@ -1,6 +1,6 @@
 # This file will define functions about the budget
-from operator import index
-from tkinter import Tk, messagebox
+
+from tkinter import Tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import pandas as pd
 

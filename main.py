@@ -1,7 +1,5 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 
-from budget import Budget
 from transaction import Transaction
 from budget import Budget
 from analysis import Analysis
