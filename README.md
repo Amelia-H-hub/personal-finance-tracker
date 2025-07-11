@@ -1,7 +1,7 @@
 # Personal Finance Tracker
 A group project of CICCC-Data Science
 
-## Menu Options
+## 📋 Menu Options
 
 1. Import a CSV File
 2. View All Transactions
@@ -18,3 +18,22 @@ A group project of CICCC-Data Science
 13. Visualize Spending Trends
 14. Save Transactions to CSV
 15. Exit
+
+## 📁 Project Structure
+
+```
+personal-finance-tracker/
+├── Main.py           # Entry point of the application
+├── analysis.py       # Analysis operations
+├── budget.py         # Budget operations
+├── transaction.py    # Transaction operations
+├── README.md         # Project documentation
+├── requirements.txt  # Dependency list
+├── .gitignore        # Git ignore rules
+```
+
+## 🚀 Running the Application
+
+```bash
+python main.py
+```
