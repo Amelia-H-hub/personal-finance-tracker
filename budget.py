@@ -93,7 +93,10 @@ class Budget:
         self.is_budget_saved = False
         print("\n=== Budget List ===")
         print(budget.to_string(index=False))
-        return budget, self.is_budget_saved
+        while True:
+            quit = input("Press Q to quit: ").strip().lower()
+            if quit == 'q':
+                return budget, self.is_budget_saved
 
     def check_budget(self, budget, df):
         if budget.empty:
