@@ -8,7 +8,7 @@ import pandas as pd
 class Transaction:
     def __init__(self):
         self.file_path = None
-        self.is_trans_saved = False
+        self.is_trans_saved = True
 
     def import_csv(self):
         root = Tk()
