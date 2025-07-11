@@ -20,7 +20,7 @@ class Analysis:
         print()
         print("--- Average Monthly Spending ---")
 
-        avg = round(df[df["Type"] == "Expense"].groupby(df["Date"].dt.to_period('M'))["Amount"].mean().mean(), 2)
+        avg = round(df[df["Type"] == "Expense"].groupby(df["Date"].dt.to_period('M'))["Amount"].sum().mean(), 2)
         print(avg)
 
     def show_top_spending_category(self, df):
