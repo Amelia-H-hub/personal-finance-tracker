@@ -13,6 +13,11 @@ class Analysis:
         total_spending_by_category = df[df["Type"] == "Expense"].groupby("Category")["Amount"].sum().sort_index()
         print(total_spending_by_category.to_string())
 
+        while True:
+            quit = input("Press Q to quit: ").strip().lower()
+            if quit == 'q':
+                return
+
     def calculate_average_monthly_spending(self, df):
         if df.empty:
             return df
@@ -22,6 +27,11 @@ class Analysis:
 
         avg = round(df[df["Type"] == "Expense"].groupby(df["Date"].dt.to_period('M'))["Amount"].sum().mean(), 2)
         print(avg)
+
+        while True:
+            quit = input("Press Q to quit: ").strip().lower()
+            if quit == 'q':
+                return
 
     def show_top_spending_category(self, df):
         print()
@@ -34,6 +44,11 @@ class Analysis:
         max_amount = spending_df.groupby("Category")["Amount"].sum().max()
 
         print(f"Top spending category: {top_category} (${max_amount:.2f})")
+
+        while True:
+            quit = input("Press Q to quit: ").strip().lower()
+            if quit == 'q':
+                return
 
     def visualize_spending_trends(self, df):
         print("Visualize Spending Trends")
